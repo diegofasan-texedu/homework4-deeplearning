@@ -14,6 +14,7 @@ from pathlib import Path
 import cv2
 import numpy as np
 from PIL import Image
+import torch
 from torchvision import transforms as tv_transforms
 
 from .road_utils import Track, homogeneous
@@ -247,10 +248,10 @@ class EgoTrackProcessor:
         track_right = track_right @ world2ego.T
         waypoints = waypoints @ world2ego.T
 
-        # project to bird's eye view (bev)
-        track_left = track_left[:, [0, 2]]
-        track_right = track_right[:, [0, 2]]
-        waypoints = waypoints[:, [0, 2]]
+        # project to bird's eye view (bev): [Longitudinal (Z), Lateral (X)]
+        track_left = track_left[:, [2, 0]]
+        track_right = track_right[:, [2, 0]]
+        waypoints = waypoints[:, [2, 0]]
 
         # make sure points are expected size
         track_left, _ = pad(track_left, self.n_track)
@@ -263,3 +264,37 @@ class EgoTrackProcessor:
             "waypoints": waypoints.astype(np.float32),
             "waypoints_mask": waypoints_mask,
         }
+
+
+class StateFlip:
+    def __init__(self, p: float = 0.5):
+        self.p = p
+
+    def __call__(self, sample: dict):
+        if np.random.rand() < self.p:
+            # Swap left and right tracks
+            if "track_left" in sample and "track_right" in sample:
+                sample["track_left"], sample["track_right"] = (
+                    sample["track_right"].copy(),
+                    sample["track_left"].copy(),
+                )
+                # Negate lateral coordinate (index 1)
+                sample["track_left"][:, 1] *= -1
+                sample["track_right"][:, 1] *= -1
+            
+            if "waypoints" in sample:
+                sample["waypoints"][:, 1] *= -1
+                
+            if "image" in sample:
+                sample["image"] = np.flip(sample["image"], axis=2).copy()
+
+        return sample
+
+
+class ColorJitter(tv_transforms.ColorJitter):
+    def __call__(self, sample: dict):
+        if "image" in sample:
+            img = torch.as_tensor(sample["image"])
+            img = super().__call__(img)
+            sample["image"] = img.numpy()
+        return sample

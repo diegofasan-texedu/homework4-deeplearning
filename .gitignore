@@ -6,3 +6,6 @@ logs/*
 
 .vscode/
 save/
+
+drive_data/*
+drive_data.zip

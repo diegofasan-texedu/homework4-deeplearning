@@ -1,0 +1,16 @@
+Fatal Python error: Segmentation fault
+
+Current thread 0x00007fbd8f46a740 (most recent call first):
+  File "/home/lagots.100/homeworks/homework4-dl/./grader/supertux_utils/evaluate.py", line 131 in get_instance
+  File "/home/lagots.100/homeworks/homework4-dl/./grader/supertux_utils/evaluate.py", line 214 in evaluate
+  File "/home/lagots.100/homeworks/homework4-dl/grader/tests.py", line 195 in test_driving_performance
+  File "/home/lagots.100/homeworks/homework4-dl/grader/grader.py", line 68 in wrapper
+  File "/home/lagots.100/homeworks/homework4-dl/grader/grader.py", line 163 in run
+  File "/home/lagots.100/homeworks/homework4-dl/grader/grader.py", line 191 in grade
+  File "/home/lagots.100/homeworks/homework4-dl/grader/grader.py", line 211 in grade_all
+  File "/home/lagots.100/homeworks/homework4-dl/grader/grader.py", line 354 in run
+  File "/home/lagots.100/homeworks/homework4-dl/grader/__main__.py", line 13 in <module>
+  File "/home/lagots.100/miniconda/envs/hm4/lib/python3.10/runpy.py", line 86 in _run_code
+  File "/home/lagots.100/miniconda/envs/hm4/lib/python3.10/runpy.py", line 196 in _run_module_as_main
+
+Extension modules: numpy._core._multiarray_umath, numpy.linalg._umath_linalg, torch._C, torch._C._dynamo.autograd_compiler, torch._C._dynamo.eval_frame, torch._C._dynamo.guards, torch._C._dynamo.utils, torch._C._fft, torch._C._linalg, torch._C._nested, torch._C._nn, torch._C._sparse, torch._C._special, PIL._imaging, PIL._imagingft, gmpy2.gmpy2, numpy.random._common, numpy.random.bit_generator, numpy.random._bounded_integers, numpy.random._mt19937, numpy.random.mtrand, numpy.random._philox, numpy.random._pcg64, numpy.random._sfc64, numpy.random._generator, kiwisolver._cext (total: 26)
