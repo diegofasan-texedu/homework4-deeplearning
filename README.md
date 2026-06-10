@@ -4,7 +4,7 @@ title: Homework 4
 permalink: /homework/04/index.html
 ---
 
-# Diego's Lab Report: Driving with Transformers and CNNs
+# Driving with Transformers and CNNs
 
 **Course:** Deep Learning (Master's Degree Program)  
 **Institution:** The University of Texas at Austin (UT Austin)  
